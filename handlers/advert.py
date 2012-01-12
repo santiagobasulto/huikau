@@ -1,11 +1,17 @@
-import os
 from lib import webapp2
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
-
+from google.appengine.ext import db
 from models import Campaign
-        
-class NewCampaign(webapp2.RequestHandler):
+
+class NewAdvert(webapp2.RequestHandler):
+    def select_campaign(self):
+        user = users.get_current_user()
+        #q = Campaign.all()
+        #q.filter('owner=',user)
+        q = db.GqlQuery("SELECT * FROM Campaign " +
+                "WHERE owner = :1",user)
+        self.response.out.write(template.render('templates/advert/select_campaign.html',{'campaings':q}))
     def get(self):
         user = users.get_current_user()
         if user:
@@ -21,14 +27,3 @@ class NewCampaign(webapp2.RequestHandler):
             return self.redirect("/campaign/%s" % c.key().id())
         else:
             return self.redirect(users.create_login_url(self.request.uri))
-class ViewCampaign(webapp2.RequestHandler):
-    def get(self,campaign_id):
-        c = Campaign.get_by_id(int(campaign_id))
-        user = users.get_current_user()
-        if c:
-            if c.owner == user:
-                self.response.out.write("Queres ver: %s" % c.name)
-            else:
-                self.response.out.write("No tenes permisos")
-        else:
-            self.response.out.write("La campania no existe")
