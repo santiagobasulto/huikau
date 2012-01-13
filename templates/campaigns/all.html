@@ -1,0 +1,10 @@
+{% extends "../base.html" %}
+
+{% block content %}
+	<h2>Todas sus campañas</h2>
+	<ul>
+		{% for campaign in campaings %}
+			<li><a href='/campaign/{{campaign.key.id}}'>{{campaign.name}}</a></li>
+		{% endfor %}
+	</ul>
+{% endblock %}

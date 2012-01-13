@@ -1,0 +1,26 @@
+{% extends "../base.html" %}
+
+{% block content %}
+{% if errors%}
+	{% for e in errors%}
+		<p style='color:red'>{{e}}</p>
+	{% endfor %}
+{% endif %}
+	<form action='' method='POST' enctype="multipart/form-data">
+		<h4>Info general</h4>
+		Nombre: <input type='text' name='name' /><br />
+		Target Url: <input type='text' name='target_url' /><span>*</span><br />
+		Priority:
+			<select name='priority'>
+				<option value='1'>High</option>
+				<option value='2'>Medium</option>
+				<option value='3'>Low</option>
+			</select><br />
+		<h4>Estructura del anuncio de img</h4>
+		Img a mostrar: <input type='file' name='img' /><span>*</span><br />
+		Alt Text: <input type='text' name='alt_text' /><br />
+		Title Text: <input type='text' name='title_text' /><br />
+		<input type='submit' value='Crear Anuncio' />
+		<span>* campos obligatorios</span>
+	</form>
+{% endblock %}

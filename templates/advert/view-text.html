@@ -1,0 +1,12 @@
+{% extends "../base.html" %}
+
+{% block content %}
+<h1> Your Advert</h1>
+	<b>Nombre:</b> {{ad.name}}<br />
+	<b>Target Url:</b> {{ad.target_url}}<br />
+	<b>Priority:</b> {{ad.priority}}<br />
+	<b>Titulo a mostrar:</b> {{ad.title}}<br />
+	<b>Linea de texto 1:</b> {{ad.description_text_line_1}}<br />
+	<b>Linea de texto 2:</b> {{ad.description_text_line_2}}<br />
+	<b>URL para mostrar:</b> {{ad.visible_url}}<br />
+{% endblock %}

@@ -20,6 +20,7 @@ class TextAdvert(Advert):
     
     
 class ImgAdvert(Advert):
-    img_path    = db.StringProperty(required=True)
+    img         = db.BlobProperty(required=True)
+    mimetype    = db.StringProperty(required=True)
     alt_text    = db.StringProperty()
     title_text  = db.StringProperty()

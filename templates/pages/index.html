@@ -1,0 +1,11 @@
+{% extends "../base.html" %}
+
+{% block content %}
+	<h1>Huikau - Micro Ad Server</h1>
+	{% if user %}
+		<h4> Bienvenido {{user.nickname}} </h4>
+	{% else %}
+		<h4> Bienvenido invitado. </h4>
+	{% endif %}
+	<a href='{{url}}'>{{link_text}}</a>
+{% endblock %}
