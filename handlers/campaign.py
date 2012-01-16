@@ -4,7 +4,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import db
 
-from models import Campaign
+from models import Campaign, Advert
         
 class NewCampaign(webapp2.RequestHandler):
     def get(self):
@@ -35,7 +35,8 @@ class ViewCampaign(webapp2.RequestHandler):
         user = users.get_current_user()
         if c:
             if c.owner == user:
-                self.response.out.write(template.render('templates/campaigns/view.html',{'campaign':c}))
+                ads = Advert.all().filter('campaign',c)
+                self.response.out.write(template.render('templates/campaigns/view.html',{'campaign':c,'ads':ads}))
             else:
                 self.response.out.write("No tenes permisos")
         else:

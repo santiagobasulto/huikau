@@ -6,11 +6,19 @@ class Campaign(db.Model):
     owner = db.UserProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
     active = db.BooleanProperty(default=False)
+    @staticmethod
+    def get_from_user(user):
+        return Campaign.all().filter('owner',user)
+    def get_adverts(self):
+        pass
+    def __str__(self):
+        return self.name
 
 class Advert(polymodel.PolyModel):
     name            = db.StringProperty(required=False)
     target_url      = db.StringProperty(required=True)
     priority        = db.IntegerProperty(required=False)
+    campaign        = db.ReferenceProperty(Campaign)
     
 class TextAdvert(Advert):
     title                   = db.StringProperty(required=True)

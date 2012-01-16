@@ -3,7 +3,15 @@
 {% block content %}
 	<h1>Huikau - Micro Ad Server</h1>
 	{% if user %}
-		<h4> Bienvenido {{user.nickname}} </h4>
+		<h4> Bienvenido {{user.nickname}}</h4>
+		<h4>Tus campañas:</h4>
+		{% if campaigns %}
+			<ul>
+			{% for c in campaigns%}
+				<li><a href='/campaign/{{c.key.id}}'>{{c.name}}</a></li>
+			{% endfor %}
+			</ul>
+		{% endif %}
 	{% else %}
 		<h4> Bienvenido invitado. </h4>
 	{% endif %}

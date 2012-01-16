@@ -24,8 +24,16 @@ class NewTextAdvert(webapp2.RequestHandler):
         visible_url = self.request.get('visible_url',None)
         if not target_url or not title or not description_text_line_1:
             return self.get(campaign_id,['Faltan campos obligatorios',])
-        
-        ad = TextAdvert(target_url=target_url,priority=int(priority),title=title,description_text_line_1=description_text_line_1)
+        campaign = Campaign.get_by_id(int(campaign_id))
+        ad = TextAdvert(
+            name = name,
+            target_url=target_url,
+            priority=int(priority),
+            title=title,
+            description_text_line_1=description_text_line_1,
+            description_text_line_2=description_text_line_2,
+            visible_url = visible_url,
+            campaign=campaign)
         ad.put()
         if ad.is_saved():
             return self.redirect(webapp2.uri_for('advert.view',advert_id=ad.key().id()))
@@ -45,13 +53,21 @@ class NewImgAdvert(webapp2.RequestHandler):
         name = self.request.get('name',None)
         target_url = self.request.get('target_url',None)
         priority = self.request.get('priority',None)
-        img = self.request.POST.get('img',None)
+        img = self.request.POST['img']
         alt_text = self.request.get('alt_text',None)
         title_text = self.request.get('title_text',None)
-        if not target_url or not img:
+        if not target_url  or not img.value:
             return self.get(campaign_id,['Faltan campos obligatorios',])
-        blob_img = db.Blob(img)
-        ad = ImgAdvert(target_url=target_url,priority=int(priority),img=blob_img,mimetype=img.type)
+        campaign = Campaign.get_by_id(int(campaign_id))
+        ad = ImgAdvert(
+            name = name,
+            target_url=target_url,
+            priority=int(priority),
+            img=img.value,
+            mimetype=img.type,
+            alt_text = alt_text,
+            title_text = title_text,
+            campaign = campaign)
         ad.put()
         if ad.is_saved():
             return self.redirect(webapp2.uri_for('advert.view',advert_id=ad.key().id()))

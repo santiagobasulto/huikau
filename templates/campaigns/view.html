@@ -2,6 +2,12 @@
 
 {% block content %}
 	<h1>Ver campaña: {{campaign.name}}</h1>
+	<h4>Anuncios de la campaña</h4>
+	<ul>
+		{% for a in ads %}
+		<li><a href='/advert/{{a.key.id}}'>{{a.name}} ({{a.class_name}})</a></li>
+		{% endfor %}
+	</ul>
 	<h4>Crear anuncios:</h4>
 	<ul>
 		<li><a href='/advert/new-text/campaign_id:{{campaign.key.id}}'>Texto</a></li>
